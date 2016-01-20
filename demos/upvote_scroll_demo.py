@@ -189,7 +189,13 @@ while True:
 	ldp.clear()
 	try:
 		url = sys.argv[1] + ".json"
-		response = urllib2.urlopen(url)
+		while True:
+			try:
+				response = urllib2.urlopen(url)
+				break
+			except urllib2.HTTPError:
+				time.sleep(1);
+				continue	
 		data = json.load(response)
 		upvotes = data[0]['data']['children'][0]['data']['score']
 		print upvotes
